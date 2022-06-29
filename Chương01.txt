@@ -1,0 +1,263 @@
+Bài 1: Giới thiệu chương học và phân tích kiến thức
+===============================================================
+Bài 2: VueJS và những thông tin cần biết
+===============================================================
+Bài 3: Cách xử lý sự kiện trong vuejs
+
+1. Chỉ thị v-on
+---------------------------------------------------------------
+2. Event modifiers
+---------------------------------------------------------------
+3. Computed
+---------------------------------------------------------------
+3. Two ways binding
+
+<head>
+ <script src="...vuejs"
+<body>
+ #app
+  h1: FirstName = {{firstName}}
+  p: about = {{about}}
+  input: placeholder="Input first name" type="text" v-on:keyup="handleKeyUp" hoặc v-model="firstName"
+  textarea v-model="about"
+</body>
+ script:
+  var app = new Vue({
+   el: '#app',
+   data: {
+    firstName: '',
+    about: ''
+   },
+   methods: {
+    handleKeyUp(e){
+     this.firstName = e.target.value;
+     console.log(e.target.value);
+    }
+   }
+  })
+---------------------------------------------------------------
+4. Binding class. (:name="'gender_' + index")
+
+button: @click="changeActive" Change Active
+button: @click="changeError" Change Error
+//.demo :class="objClass"
+hoặc :class="'demo-' + textClass + ' error'"
+
+createApp({
+      data() {
+        return {
+          textClass: 'active',
+	  isActive: false,
+	  isError: false,
+        };
+      },
+         methods: {
+           changeActive() {
+             this.isActive = !this.isActive;
+           },
+           changeError() {
+             this.isError = !this.isError;
+           },
+         },
+	computed: {
+	 objClass(){
+	  return {
+	    active: this.isActive,
+	    error: this.isError,
+	  }
+	 }
+	}
+    }).mount("#app");
+---------------------------------------------------------------
+5. Binding style.
+:style="{ backgroundImage: 'url(' + bg-main + ')' }"
+hoặc :style="{ backgroundImage: openBackground }"
+hoặc :style="objectBackground"
+  :style="{color: activeColor, fontSize: fontSize + 'px', marginTop: '20px'}" Test style binding
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          activeColor: 'red',
+	  fontSize: 20,
+	  bg-main: "image url....."
+        };
+      },
+      methods: {
+        
+      },
+      computed: {
+        openBackground(){
+	 return 'url(' + bg-main + ')';
+	},
+	objectBackground(){
+	 return {
+	   backgroundImage: 'url('+this.bg-main+')',
+	   margin: '10px',
+	   paddingLeft: '30px'
+	 }
+	}
+      },
+    }).mount("#app");
+  </script>
+
+===============================================================
+Bài 4: Biểu thức điều kiện và vòng lặp.
+
+1. Conditions
+ul#tabs
+ li:Dang nhap @click="changeTab('login')"
+ li:Dang ky @click="changeTab('register')"
+.login v-if="tabSelected === 'login'"
+//.register v-else>
+hoặc .register v-else-if="tabSelected === 'register'"
+
+hoặc
+.login v-show="tabSelected === 'login'"
+hoặc .register v-show="tabSelected === 'register'"
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          tabSelected: 'login',
+        };
+      },
+      methods: {
+        changeTab(text){
+	 this.tabSelected = text
+	}
+      },
+      computed: {
+        
+      },
+    }).mount("#app");
+  </script>
+
+---------------------------------------------------------------
+2. Loop.
+
+ul>li: v-for="(value, key) in scores"
+	{{key}} : {{value}}
+
+div>div: v-for="(blog, index) in listBlogs" :key="index"
+	{{blog.id}} - {{blog.price}} .....
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+	  scores:{
+	   english: 5,
+	   math: 8,
+	   physics: 3,
+	  },
+          listBlogs: [
+	   {
+	    "id": 1,
+	    "product_name": "IP 14",
+	    "price": 50000000,
+            "description": "hello íp4"
+	   },
+	   {
+	    "id": 2,
+	    "product_name": "IP 14",
+	    "price": 50000000,
+            "description": "hello íp4"
+	   },
+	   {
+	    "id": 3,
+	    "product_name": "IP 14",
+	    "price": 50000000,
+            "description": "hello íp4"
+	   },
+	   {
+	    "id": 4,
+	    "product_name": "IP 14",
+	    "price": 50000000,
+            "description": "hello íp4"
+	   },
+	  ]
+        };
+      },
+    }).mount("#app");
+  </script>
+
+---------------------------------------------------------------
+3. Note.
+
+.user v-for="user in userActive": {{user.email}}
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+	  arrUser: [
+	   {
+	     email: "test1@gmail.com",
+	     isActive: false
+ 	   },
+	   {
+	     email: "test2@gmail.com",
+	     isActive: true
+ 	   },
+	   {
+	     email: "test3@gmail.com",
+	     isActive: false
+ 	   },
+	  ],
+        };
+      },
+      computed: {
+	userActive(){
+	 return this.arrUser.filter(function(u){
+	  return u.isActive;
+	 })
+	}
+      }
+    }).mount("#app");
+  </script>
+
+===============================================================
+Bài 5: Lưu ý về Array, object. BT thực hành.
+
+1. Array & object.
+
+ul>li v-for="(score,key) in objScore": {{key}} : {{score}}
+ul>li v-for="number in arrNumber": {{number}}
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+	  objScore: {
+	   math: 7.9,
+	  }
+	  arrNumber: [1,2,3,4,5,6]
+        };
+      },
+    }).mount("#app");
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+

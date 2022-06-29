@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>Conditions</title>
+  </head>
+  <body>
+    <style>
+      .box {
+        width: 150px;
+        height: 150px;
+        border: 1px solid orange;
+      }
+
+      .box-1 {
+        background-color: aqua;
+      }
+
+      .box-2 {
+        background-color: yellowgreen;
+      }
+    </style>
+    <div id="app">
+      <button @click="changeTab('login')">Đăng nhập</button>
+      <button @click="changeTab('register')">Đăng ký</button>
+
+      <!-- <div class="box box-1" v-if="tabSelected === 'login'">BOX 1</div> -->
+      <!-- <div class="box box-2" v-else-if="tabSelected === 'register'">BOX 2</div> -->
+      <!-- <div class="box box-2" v-else>BOX 2</div> -->
+
+      <div class="box box-1" v-show="tabSelected === 'login'">BOX 1</div>
+      <div class="box box-2" v-show="tabSelected === 'register'">BOX 2</div>
+    </div>
+  </body>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          tabSelected: "login",
+        };
+      },
+      methods: {
+        changeTab(text) {
+          this.tabSelected = text;
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>NOTE</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="user" v-for="user in userActive">{{user.email}}</div>
+    </div>
+  </body>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          arrUsers: [
+            { email: "test1@gmail.com", isActive: false },
+            { email: "test2@gmail.com", isActive: true },
+            { email: "test3@gmail.com", isActive: true },
+            { email: "test4@gmail.com", isActive: true },
+          ],
+        };
+      },
+      computed: {
+        userActive() {
+          return this.arrUsers.filter(function (u) {
+            return u.isActive;
+          });
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>
