@@ -21,11 +21,11 @@
                 qui.</p>
         </div>
         <div id="app">
-            <div class="cart">Giỏ hàng ()</div>
+            <div class="cart">Giỏ hàng ({{cartNumber}})</div>
             <div class="product">
                 <div class="product-image">
                     <div class="image">
-                        <img alt="">
+                        <img :alt="getProductDetail.shirtColor" :src="getProductDetail.image">
                     </div>
                 </div>
                 <div class="product-content">
@@ -33,8 +33,9 @@
                         <a href="" target=""></a>
                     </h3>
                     <p class="brand">Thương hiệu: No brand</p>
-                    <p class="quantity">Còn lại: ? Sản phẩm</p>
-                    <p class="quantity">Sản phẩm đã hết hàng</p>
+                    <p class="quantity" v-if="getProductDetail.quantity > 0">Còn lại: {{ getProductDetail.quantity }}
+                        Sản phẩm</p>
+                    <p class="quantity" v-else>Sản phẩm đã hết hàng</p>
 
                     <div class="wrapper-price">
                         <div class="final-price">{{ formatFinalPrice }}</div>
@@ -44,17 +45,23 @@
                     <div class="wrapper-color">
                         <div class="text">Màu sắc</div>
                         <div class="list-color">
-                            <p class="color-text">Màu gì?</p>
+                            <p class="color-text text-red" v-if="getProductDetail.shirtColor == 'Màu đỏ máu lửa'">{{
+                                getProductDetail.shirtColor }}</p>
+                            <p class="color-text text-blue" v-if="getProductDetail.shirtColor == 'Màu xanh nước biển'">
+                                {{ getProductDetail.shirtColor }}</p>
+                            <p class="color-text text-yellow" v-if="getProductDetail.shirtColor == 'Màu vàng gia tộc'">
+                                {{ getProductDetail.shirtColor }}</p>
                             <ul>
-                                <li>
-                                    <img src="" alt="">
+                                <li v-for="(productDetail, index) in listProductDetail"
+                                    @click="handleSelectedProduct(index)" :class="classSelectedProduct(index)">
+                                    <img :src="productDetail.image" :alt="productDetail.shirtColor">
                                 </li>
                                 <!-- <li><img src="./images/blue.jpg" alt="color"></li> -->
                                 <!-- <li><img src="./images/red.jpg" alt="color"></li> -->
                             </ul>
                         </div>
                     </div>
-                    <button class="add-to-cart">Add to cart</button>
+                    <button class="add-to-cart" @click="handleAddToCart">Add to cart</button>
                 </div>
 
             </div>
@@ -68,7 +75,11 @@
                 </ul>
                 <h2>Chất liệu bền chặt&nbsp;</h2>
                 <!-- v-html -->
-                <div></div>
+                <!-- <div v-for="paraHtml in listHTML">
+                    {{paraHtml}}
+                </div> -->
+                <!-- <div v-for="paraHtml in listHTML" v-html="paraHtml">
+                </div> -->
             </div>
 
         </div>

@@ -124,6 +124,21 @@ footer {
     padding: 15px 30px;
     background-color: #34495e;
 }
-header h1, footer h1 {
+header h1,
+footer h1 {
     margin: 0;
 }
+
+/* Custom css */
+.text-red {
+    color: red;
+}
+
+.text-blue {
+    color: blue;
+}
+
+.text-yellow {
+    color: yellow;
+}
+/* End Custom css */

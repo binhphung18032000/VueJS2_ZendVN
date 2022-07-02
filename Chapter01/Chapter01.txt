@@ -250,6 +250,235 @@ ul>li v-for="number in arrNumber": {{number}}
     }).mount("#app");
   </script>
 
+---------------------------------------------------------------
+2. Practice: Shopping mini
+
+---------------------------------------------------------------
+3. Data and prices
+
+createApp({
+    data() {
+        return {
+            title: 'Áo bóng đá nam vải Mỹ nhập khẩu',
+            url: 'https://shopeefood.vn/ho-chi-minh/ta-la-an-vat-mi-xao-com-chien-sinh-to-phan-van-tri',
+            target: '_blank',
+            price: 100000,
+            sale: 0.5,
+            selectedProduct: 2,
+            listProductDetail: [
+                {
+                    image: './images/spain.jpg',
+                    quantity: 3,
+                    shirtColor: 'Màu đỏ máu lửa'
+                },
+                {
+                    image: './images/italia.jpg',
+                    quantity: 10,
+                    shirtColor: 'Màu xanh nước biển'
+                },
+                {
+                    image: './images/brazil.jpg',
+                    quantity: 0,
+                    shirtColor: 'Màu vàng gia tộc'
+                },
+            ]
+        };
+    },
+    computed: {
+        formatOriginalPrice() {
+            var originalPrice = this.price;
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(originalPrice);
+        },
+        formatFinalPrice() {
+            var finalPrice = this.price - this.sale * this.price;
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(finalPrice);
+        },
+        priceSaleOff() {
+            return this.sale * 100;
+        },
+    }
+}).mount("#app");
+
+<div class="wrapper-price">
+                        <div class="final-price">{{ formatFinalPrice }}</div>
+                        <div class="origin-price">{{ formatOriginalPrice }}</div>
+                        <div class="sale-price">-{{ priceSaleOff }}%</div>
+                    </div>
+
+---------------------------------------------------------------
+4. Change color 01
+
+computed: {
+        ...
+        getProductDetail() {
+            let index = this.selectedProduct;
+            return this.listProductDetail[index];
+        }
+    }
+
+	     <p class="brand">Thương hiệu: No brand</p>
+                    <p class="quantity" v-if="getProductDetail.quantity > 0">Còn lại:	{{getProductDetail.quantity }} Sản phẩm</p>
+                    <p class="quantity" v-else>Sản phẩm đã hết hàng</p>
+
+
+<div class="list-color">
+                            <p class="color-text text-red" v-if="getProductDetail.shirtColor == 'Màu đỏ máu 		lửa'">{{
+                                getProductDetail.shirtColor }}</p>
+                            <p class="color-text text-blue" v-if="getProductDetail.shirtColor == 'Màu xanh nước 		biển'">
+                                {{ getProductDetail.shirtColor }}</p>
+                            <p class="color-text text-yellow" v-if="getProductDetail.shirtColor == 'Màu vàng gia 		tộc'">
+                                {{ getProductDetail.shirtColor }}</p>
+                            <ul>
+                                <li v-for="(productDetail, index) in listProductDetail">
+                                    <img :src="productDetail.image" :alt="productDetail.shirtColor">
+                                </li>
+                                <!-- <li><img src="./images/blue.jpg" alt="color"></li> -->
+                                <!-- <li><img src="./images/red.jpg" alt="color"></li> -->
+                            </ul>
+                        </div>
+
+---------------------------------------------------------------
+5. Change color 02
+
+<ul>
+     <li v-for="(productDetail, index) in listProductDetail" :key="index" @click="handleSelectedProduct(index)" :class="classSelectedActive(index)">
+         <img :src="productDetail.image" :alt="productDetail.shirtColor">
+     </li>
+</ul>
+
+methods: {
+        handleSelectedProduct(index) {
+            this.selectedProduct = index;
+        },
+        classSelectedActive(index){
+	return {
+	  active: this.selectedProduct === index;
+	}
+        }
+    }
+
+---------------------------------------------------------------
+6. Vue html (v-html) and add quantity to cart
+
+data() {
+        return {
+            description: '<p>lorem100</p>',
+            cartNumber: 1, 
+        };
+    },
+methods:{
+        handleAddToCart(){
+ 	if (this.getProductDetail.quantity == 0) {
+                    alert("HẾT HÀNG!!!");
+               } else {
+                    if (this.cartNumber + 1 > this.getProductDetail.quantity) {
+                       alert("Vượt quá số lượng hàng đang có!!!");
+                    } else {
+                       this.cartNumber++;
+                    }
+               }
+       }
+}
+
+<div v-html="description">
+
+===============================================================
+Bài 6: Cách sử dụng Vue CLI.
+
+1. Install.
+
+---------------------------------------------------------------
+2. Structure folder 01
+
+a. Development
+- Babel -> ES6 phiên bản mới của ES5
+- Webpack -> Công cụ giúp đóng gói code, đóng gói mã nguồn (npm run build)
+
+---------------------------------------------------------------
+3. Structure folder 02
+- Hướng dẫn sử dụng webpack, thêm extendsion để đọc file .vue
+
+---------------------------------------------------------------
+4. Component.
+HeaderComponent.vue:
+<template>
+	<header>
+	   <h1> {{contentHeader}}
+
+<script>
+	name: 'header-coponent',
+	data(){
+	   return {
+	      contentHeader: 'xin chao component header ^^'
+	   }
+	}
+	
+FooterComponent.vue:
+<template>
+	<footer>
+	   <h1> {{contentFooter}}
+
+<script>
+	name: 'footer-coponent',
+	data(){
+	   return {
+	      contentFooter: 'xin chao component footer $$'
+	   }
+	}
+
+App.vue:
+<template>
+	<header-component />
+	<footer-component />
+
+<script>
+	import HeaderComponent from "HeaderComponent.vue";
+	import FooterComponent from "FooterComponent.vue";
+	
+	data(){
+	   return {},
+	},
+	components: {
+	   HeaderComponent,
+	   FooterComponent
+	}
+
+===============================================================
+Bài 7: Sử dụng props, custom event, slot, ref.
+
+1. Nested Component.
+User.vue:
+template>
+	h2: Người dùng thứ...
+
+ListUsers.vue:
+template> h1> Danh sách người dùng:
+	<user />
+	<user />
+	<user />
+	<user />
+script>
+	import User from "";
+	...
+	components: {
+	   User
+	}
+
+App.vue:
+template> 
+	<header-component />
+	<list-user />
+	<footer-component />
+script>
+	import ListUser from "";
+	...
+	components: {
+	   ...,
+	   ListUser
+	}
+
+---------------------------------------------------------------
+2. Props down.
 
 
 
